@@ -1,0 +1,3 @@
+{
+  "/api/products/export/csv/route": "app/api/products/export/csv/route.js"
+}
