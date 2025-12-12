@@ -1,0 +1,12 @@
+var R=require("../../../chunks/[turbopack]_runtime.js")("server/app/api/sales/route.js")
+R.c("server/chunks/node_modules_next_3446be9c._.js")
+R.c("server/chunks/node_modules_tailwind-merge_dist_bundle-mjs_mjs_c3b2c59f._.js")
+R.c("server/chunks/node_modules_zod_v4_dead09ad._.js")
+R.c("server/chunks/node_modules_next-auth_1810886e._.js")
+R.c("server/chunks/node_modules_openid-client_d15f72b3._.js")
+R.c("server/chunks/node_modules_jose_dist_node_cjs_bd88468e._.js")
+R.c("server/chunks/node_modules_367da25b._.js")
+R.c("server/chunks/[root-of-the-server]__b08a1712._.js")
+R.c("server/chunks/_next-internal_server_app_api_sales_route_actions_51d6c45b.js")
+R.m("[project]/node_modules/next/dist/esm/build/templates/app-route.js { INNER_APP_ROUTE => \"[project]/src/app/api/sales/route.ts [app-route] (ecmascript)\" } [app-route] (ecmascript)")
+module.exports=R.m("[project]/node_modules/next/dist/esm/build/templates/app-route.js { INNER_APP_ROUTE => \"[project]/src/app/api/sales/route.ts [app-route] (ecmascript)\" } [app-route] (ecmascript)").exports

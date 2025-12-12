@@ -1,0 +1,54 @@
+[2025-12-12T16:42:14.206Z] CSV ERROR: PrismaClientValidationError: 
+Invalid `__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["prisma"].sale.findMany()` invocation in
+C:\Users\azis.muhammad\Documents\Me\pos-app\.next\dev\server\chunks\[root-of-the-server]__2928ba30._.js:110:163
+
+  107         where.createdAt.lte = new Date(endDate + "T23:59:59");
+  108     }
+  109 }
+→ 110 const sales = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["prisma"].sale.findMany({
+        where: {},
+        include: {
+          items: {
+            include: {
+              product: true
+            }
+          },
+          cashier: {
+          ~~~~~~~
+            select: {
+              name: true
+            }
+          },
+      ?   user?: true
+        },
+        orderBy: {
+          createdAt: "desc"
+        }
+      })
+
+Unknown field `cashier` for include statement on model `Sale`. Available options are marked with ?.
+    at Nn (C:\Users\azis.muhammad\Documents\Me\pos-app\node_modules\@prisma\client\runtime\library.js:29:1363)
+    at ei.handleRequestError (C:\Users\azis.muhammad\Documents\Me\pos-app\node_modules\@prisma\client\runtime\library.js:121:6911)
+    at ei.handleAndLogRequestError (C:\Users\azis.muhammad\Documents\Me\pos-app\node_modules\@prisma\client\runtime\library.js:121:6593)
+    at ei.request (C:\Users\azis.muhammad\Documents\Me\pos-app\node_modules\@prisma\client\runtime\library.js:121:6300)
+    at async a (C:\Users\azis.muhammad\Documents\Me\pos-app\node_modules\@prisma\client\runtime\library.js:130:9551)
+    at async GET (C:\Users\azis.muhammad\Documents\Me\pos-app\.next\dev\server\chunks\[root-of-the-server]__2928ba30._.js:110:23)
+    at async AppRouteRouteModule.do (C:\Users\azis.muhammad\Documents\Me\pos-app\node_modules\next\dist\compiled\next-server\app-route-turbo.runtime.dev.js:5:37789)
+    at async AppRouteRouteModule.handle (C:\Users\azis.muhammad\Documents\Me\pos-app\node_modules\next\dist\compiled\next-server\app-route-turbo.runtime.dev.js:5:45045)
+    at async responseGenerator (C:\Users\azis.muhammad\Documents\Me\pos-app\.next\dev\server\chunks\node_modules_1fb44a35._.js:17224:38)
+    at async AppRouteRouteModule.handleResponse (C:\Users\azis.muhammad\Documents\Me\pos-app\node_modules\next\dist\compiled\next-server\app-route-turbo.runtime.dev.js:1:187851)
+    at async handleResponse (C:\Users\azis.muhammad\Documents\Me\pos-app\.next\dev\server\chunks\node_modules_1fb44a35._.js:17286:32)
+    at async handler (C:\Users\azis.muhammad\Documents\Me\pos-app\.next\dev\server\chunks\node_modules_1fb44a35._.js:17339:13)
+    at async DevServer.renderToResponseWithComponentsImpl (C:\Users\azis.muhammad\Documents\Me\pos-app\node_modules\next\dist\server\base-server.js:1413:9)
+    at async DevServer.renderPageComponent (C:\Users\azis.muhammad\Documents\Me\pos-app\node_modules\next\dist\server\base-server.js:1465:24)
+    at async DevServer.renderToResponseImpl (C:\Users\azis.muhammad\Documents\Me\pos-app\node_modules\next\dist\server\base-server.js:1515:32)
+    at async DevServer.pipeImpl (C:\Users\azis.muhammad\Documents\Me\pos-app\node_modules\next\dist\server\base-server.js:1021:25)
+    at async NextNodeServer.handleCatchallRenderRequest (C:\Users\azis.muhammad\Documents\Me\pos-app\node_modules\next\dist\server\next-server.js:394:17)
+    at async DevServer.handleRequestImpl (C:\Users\azis.muhammad\Documents\Me\pos-app\node_modules\next\dist\server\base-server.js:912:17)
+    at async C:\Users\azis.muhammad\Documents\Me\pos-app\node_modules\next\dist\server\dev\next-dev-server.js:382:20
+    at async Span.traceAsyncFn (C:\Users\azis.muhammad\Documents\Me\pos-app\node_modules\next\dist\trace\trace.js:157:20)
+    at async DevServer.handleRequest (C:\Users\azis.muhammad\Documents\Me\pos-app\node_modules\next\dist\server\dev\next-dev-server.js:378:24)
+    at async invokeRender (C:\Users\azis.muhammad\Documents\Me\pos-app\node_modules\next\dist\server\lib\router-server.js:240:21)
+    at async handleRequest (C:\Users\azis.muhammad\Documents\Me\pos-app\node_modules\next\dist\server\lib\router-server.js:436:24)
+    at async requestHandlerImpl (C:\Users\azis.muhammad\Documents\Me\pos-app\node_modules\next\dist\server\lib\router-server.js:484:13)
+    at async Server.requestListener (C:\Users\azis.muhammad\Documents\Me\pos-app\node_modules\next\dist\server\lib\start-server.js:226:13)
