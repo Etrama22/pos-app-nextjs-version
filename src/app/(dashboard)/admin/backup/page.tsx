@@ -17,7 +17,7 @@ import { Badge } from "@/components/ui/badge";
 import { useToast } from "@/components/ui/toast";
 import { formatDateTime } from "@/lib/utils";
 import { Database, Download, RefreshCw, Clock } from "lucide-react";
-import { BackupType } from "@prisma/client";
+import type { BackupType } from "@prisma/client";
 
 interface Backup {
   id: string;

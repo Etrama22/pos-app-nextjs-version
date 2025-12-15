@@ -1,0 +1,201 @@
+{
+  "version": 3,
+  "pages404": true,
+  "caseSensitive": false,
+  "basePath": "",
+  "redirects": [
+    {
+      "source": "/:path+/",
+      "destination": "/:path+",
+      "internal": true,
+      "priority": true,
+      "statusCode": 308,
+      "regex": "^(?:/((?:[^/]+?)(?:/(?:[^/]+?))*))/$"
+    }
+  ],
+  "headers": [],
+  "rewrites": {
+    "beforeFiles": [],
+    "afterFiles": [],
+    "fallback": []
+  },
+  "dynamicRoutes": [
+    {
+      "page": "/api/auth/[...nextauth]",
+      "regex": "^/api/auth/(.+?)(?:/)?$",
+      "routeKeys": {
+        "nxtPnextauth": "nxtPnextauth"
+      },
+      "namedRegex": "^/api/auth/(?<nxtPnextauth>.+?)(?:/)?$"
+    },
+    {
+      "page": "/api/products/[id]",
+      "regex": "^/api/products/([^/]+?)(?:/)?$",
+      "routeKeys": {
+        "nxtPid": "nxtPid"
+      },
+      "namedRegex": "^/api/products/(?<nxtPid>[^/]+?)(?:/)?$"
+    },
+    {
+      "page": "/api/sales/[id]",
+      "regex": "^/api/sales/([^/]+?)(?:/)?$",
+      "routeKeys": {
+        "nxtPid": "nxtPid"
+      },
+      "namedRegex": "^/api/sales/(?<nxtPid>[^/]+?)(?:/)?$"
+    }
+  ],
+  "staticRoutes": [
+    {
+      "page": "/",
+      "regex": "^/(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/(?:/)?$"
+    },
+    {
+      "page": "/_global-error",
+      "regex": "^/_global\\-error(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/_global\\-error(?:/)?$"
+    },
+    {
+      "page": "/_not-found",
+      "regex": "^/_not\\-found(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/_not\\-found(?:/)?$"
+    },
+    {
+      "page": "/admin/backup",
+      "regex": "^/admin/backup(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/admin/backup(?:/)?$"
+    },
+    {
+      "page": "/admin/products",
+      "regex": "^/admin/products(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/admin/products(?:/)?$"
+    },
+    {
+      "page": "/admin/sales",
+      "regex": "^/admin/sales(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/admin/sales(?:/)?$"
+    },
+    {
+      "page": "/api/auth/register",
+      "regex": "^/api/auth/register(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/api/auth/register(?:/)?$"
+    },
+    {
+      "page": "/api/backup/download",
+      "regex": "^/api/backup/download(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/api/backup/download(?:/)?$"
+    },
+    {
+      "page": "/api/backup/list",
+      "regex": "^/api/backup/list(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/api/backup/list(?:/)?$"
+    },
+    {
+      "page": "/api/backup/manual",
+      "regex": "^/api/backup/manual(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/api/backup/manual(?:/)?$"
+    },
+    {
+      "page": "/api/backup/restore",
+      "regex": "^/api/backup/restore(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/api/backup/restore(?:/)?$"
+    },
+    {
+      "page": "/api/backup/schedule",
+      "regex": "^/api/backup/schedule(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/api/backup/schedule(?:/)?$"
+    },
+    {
+      "page": "/api/products",
+      "regex": "^/api/products(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/api/products(?:/)?$"
+    },
+    {
+      "page": "/api/products/active",
+      "regex": "^/api/products/active(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/api/products/active(?:/)?$"
+    },
+    {
+      "page": "/api/products/categories",
+      "regex": "^/api/products/categories(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/api/products/categories(?:/)?$"
+    },
+    {
+      "page": "/api/products/export/csv",
+      "regex": "^/api/products/export/csv(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/api/products/export/csv(?:/)?$"
+    },
+    {
+      "page": "/api/sales",
+      "regex": "^/api/sales(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/api/sales(?:/)?$"
+    },
+    {
+      "page": "/api/sales/export/csv",
+      "regex": "^/api/sales/export/csv(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/api/sales/export/csv(?:/)?$"
+    },
+    {
+      "page": "/api/sales/export/pdf",
+      "regex": "^/api/sales/export/pdf(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/api/sales/export/pdf(?:/)?$"
+    },
+    {
+      "page": "/api/sales/summary",
+      "regex": "^/api/sales/summary(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/api/sales/summary(?:/)?$"
+    },
+    {
+      "page": "/login",
+      "regex": "^/login(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/login(?:/)?$"
+    },
+    {
+      "page": "/pos",
+      "regex": "^/pos(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/pos(?:/)?$"
+    }
+  ],
+  "dataRoutes": [],
+  "rsc": {
+    "header": "rsc",
+    "varyHeader": "rsc, next-router-state-tree, next-router-prefetch, next-router-segment-prefetch",
+    "prefetchHeader": "next-router-prefetch",
+    "didPostponeHeader": "x-nextjs-postponed",
+    "contentTypeHeader": "text/x-component",
+    "suffix": ".rsc",
+    "prefetchSuffix": ".prefetch.rsc",
+    "prefetchSegmentHeader": "next-router-segment-prefetch",
+    "prefetchSegmentSuffix": ".segment.rsc",
+    "prefetchSegmentDirSuffix": ".segments",
+    "clientParamParsing": false,
+    "dynamicRSCPrerender": false
+  },
+  "rewriteHeaders": {
+    "pathHeader": "x-nextjs-rewritten-path",
+    "queryHeader": "x-nextjs-rewritten-query"
+  }
+}
