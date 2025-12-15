@@ -1,35 +1,35 @@
-import { backupRepository } from './repository'
-import { BackupQueryDTO, CreateBackupDTO } from './dto'
-import { BackupType } from '@prisma/client'
-import prisma from '@/lib/prisma'
-import { generateBackupFileName } from '@/lib/utils'
-import { config } from '@/lib/config'
-import * as fs from 'fs'
-import * as path from 'path'
+import { backupRepository } from "./repository";
+import { BackupQueryDTO, CreateBackupDTO } from "./dto";
+import type { BackupType } from "@prisma/client";
+import prisma from "@/lib/prisma";
+import { generateBackupFileName } from "@/lib/utils";
+import { config } from "@/lib/config";
+import * as fs from "fs";
+import * as path from "path";
 
 export class BackupService {
-  private backupDir = path.join(process.cwd(), 'backups')
+  private backupDir = path.join(process.cwd(), "backups");
 
   async getBackups(query: BackupQueryDTO) {
-    return backupRepository.findAll(query)
+    return backupRepository.findAll(query);
   }
 
   async getBackupById(id: string) {
-    const backup = await backupRepository.findById(id)
+    const backup = await backupRepository.findById(id);
     if (!backup) {
-      throw new Error('Backup tidak ditemukan')
+      throw new Error("Backup tidak ditemukan");
     }
-    return backup
+    return backup;
   }
 
   async createBackup(type: BackupType) {
-    const fileName = generateBackupFileName(type.toLowerCase())
-    const typeDir = path.join(this.backupDir, type.toLowerCase())
-    const filePath = path.join(typeDir, fileName)
+    const fileName = generateBackupFileName(type.toLowerCase());
+    const typeDir = path.join(this.backupDir, type.toLowerCase());
+    const filePath = path.join(typeDir, fileName);
 
     // Create directory if not exists
     if (!fs.existsSync(typeDir)) {
-      fs.mkdirSync(typeDir, { recursive: true })
+      fs.mkdirSync(typeDir, { recursive: true });
     }
 
     try {
@@ -50,7 +50,7 @@ export class BackupService {
           },
         }),
         prisma.setting.findMany(),
-      ])
+      ]);
 
       const backupData = {
         products,
@@ -59,14 +59,14 @@ export class BackupService {
         users,
         settings,
         exportedAt: new Date().toISOString(),
-        version: '1.0.0',
-      }
+        version: "1.0.0",
+      };
 
       // Write to file
-      fs.writeFileSync(filePath, JSON.stringify(backupData, null, 2))
+      fs.writeFileSync(filePath, JSON.stringify(backupData, null, 2));
 
       // Get file size
-      const stats = fs.statSync(filePath)
+      const stats = fs.statSync(filePath);
 
       // Save to database
       const backupLog = await backupRepository.create({
@@ -74,75 +74,75 @@ export class BackupService {
         filePath,
         fileSize: stats.size,
         type,
-        status: 'SUCCESS',
-      })
+        status: "SUCCESS",
+      });
 
-      return backupLog
+      return backupLog;
     } catch (error) {
       // Log failed backup
       const backupLog = await backupRepository.create({
         fileName,
         filePath,
         type,
-        status: 'FAILED',
-        error: error instanceof Error ? error.message : 'Unknown error',
-      })
+        status: "FAILED",
+        error: error instanceof Error ? error.message : "Unknown error",
+      });
 
-      throw error
+      throw error;
     }
   }
 
   async downloadBackup(id: string) {
-    const backup = await backupRepository.findById(id)
+    const backup = await backupRepository.findById(id);
     if (!backup) {
-      throw new Error('Backup tidak ditemukan')
+      throw new Error("Backup tidak ditemukan");
     }
 
     if (!fs.existsSync(backup.filePath)) {
-      throw new Error('File backup tidak ditemukan')
+      throw new Error("File backup tidak ditemukan");
     }
 
-    const content = fs.readFileSync(backup.filePath, 'utf-8')
+    const content = fs.readFileSync(backup.filePath, "utf-8");
     return {
       fileName: backup.fileName,
       content,
-    }
+    };
   }
 
   async deleteBackup(id: string) {
-    const backup = await backupRepository.findById(id)
+    const backup = await backupRepository.findById(id);
     if (!backup) {
-      throw new Error('Backup tidak ditemukan')
+      throw new Error("Backup tidak ditemukan");
     }
 
     // Delete file if exists
     if (fs.existsSync(backup.filePath)) {
-      fs.unlinkSync(backup.filePath)
+      fs.unlinkSync(backup.filePath);
     }
 
-    return backupRepository.delete(id)
+    return backupRepository.delete(id);
   }
 
   async restoreBackup(id: string) {
-    const backup = await backupRepository.findById(id)
+    const backup = await backupRepository.findById(id);
     if (!backup) {
-      throw new Error('Backup tidak ditemukan')
+      throw new Error("Backup tidak ditemukan");
     }
 
     if (!fs.existsSync(backup.filePath)) {
-      throw new Error('File backup tidak ditemukan')
+      throw new Error("File backup tidak ditemukan");
     }
 
-    const content = fs.readFileSync(backup.filePath, 'utf-8')
-    const data = JSON.parse(content)
+    const content = fs.readFileSync(backup.filePath, "utf-8");
+    const data = JSON.parse(content);
 
     // Restore data in transaction
     await prisma.$transaction(async (tx) => {
       // Clear existing data
-      await tx.saleItem.deleteMany()
-      await tx.sale.deleteMany()
-      await tx.product.deleteMany()
-      await tx.setting.deleteMany()
+      await tx.saleItem.deleteMany();
+      await tx.sale.deleteMany();
+      await tx.product.deleteMany();
+      await tx.setting.deleteMany();
 
       // Restore products
       if (data.products?.length > 0) {
@@ -161,7 +161,7 @@ export class BackupService {
               createdAt: new Date(product.createdAt),
               updatedAt: new Date(product.updatedAt),
             },
-          })
+          });
         }
       }
 
@@ -184,7 +184,7 @@ export class BackupService {
               createdAt: new Date(sale.createdAt),
               updatedAt: new Date(sale.updatedAt),
             },
-          })
+          });
         }
       }
 
@@ -201,7 +201,7 @@ export class BackupService {
               subtotal: item.subtotal,
               createdAt: new Date(item.createdAt),
             },
-          })
+          });
         }
       }
 
@@ -216,33 +216,33 @@ export class BackupService {
               createdAt: new Date(setting.createdAt),
               updatedAt: new Date(setting.updatedAt),
             },
-          })
+          });
         }
       }
-    })
+    });
 
-    return { message: 'Restore berhasil' }
+    return { message: "Restore berhasil" };
   }
 
   async cleanupOldBackups() {
-    const { retentionDays } = config.backup
+    const { retentionDays } = config.backup;
 
     await Promise.all([
-      backupRepository.deleteOldBackups('DAILY', retentionDays.daily),
-      backupRepository.deleteOldBackups('WEEKLY', retentionDays.weekly),
-      backupRepository.deleteOldBackups('MONTHLY', retentionDays.monthly),
-    ])
+      backupRepository.deleteOldBackups("DAILY", retentionDays.daily),
+      backupRepository.deleteOldBackups("WEEKLY", retentionDays.weekly),
+      backupRepository.deleteOldBackups("MONTHLY", retentionDays.monthly),
+    ]);
   }
 
   async getLatestBackups() {
     const [daily, weekly, monthly] = await Promise.all([
-      backupRepository.getLatestByType('DAILY'),
-      backupRepository.getLatestByType('WEEKLY'),
-      backupRepository.getLatestByType('MONTHLY'),
-    ])
+      backupRepository.getLatestByType("DAILY"),
+      backupRepository.getLatestByType("WEEKLY"),
+      backupRepository.getLatestByType("MONTHLY"),
+    ]);
 
-    return { daily, weekly, monthly }
+    return { daily, weekly, monthly };
   }
 }
 
-export const backupService = new BackupService()
+export const backupService = new BackupService();

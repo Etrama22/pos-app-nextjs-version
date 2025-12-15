@@ -1,6 +1,6 @@
-import prisma from '@/lib/prisma'
-import { CreateProductDTO, UpdateProductDTO, ProductQueryDTO } from './dto'
-import { Prisma } from '@prisma/client'
+import prisma from "@/lib/prisma";
+import { CreateProductDTO, UpdateProductDTO, ProductQueryDTO } from "./dto";
+import type { Prisma } from "@prisma/client";
 
 export class ProductRepository {
   async findAll(query: ProductQueryDTO) {
@@ -10,9 +10,9 @@ export class ProductRepository {
       search,
       category,
       isActive,
-      sortBy = 'createdAt',
-      sortOrder = 'desc',
-    } = query
+      sortBy = "createdAt",
+      sortOrder = "desc",
+    } = query;
 
     const where: Prisma.ProductWhereInput = {
       ...(search && {
@@ -24,7 +24,7 @@ export class ProductRepository {
       }),
       ...(category && { category }),
       ...(isActive !== undefined && { isActive }),
-    }
+    };
 
     const [data, total] = await Promise.all([
       prisma.product.findMany({
@@ -34,7 +34,7 @@ export class ProductRepository {
         orderBy: { [sortBy]: sortOrder },
       }),
       prisma.product.count({ where }),
-    ])
+    ]);
 
     return {
       data,
@@ -44,19 +44,19 @@ export class ProductRepository {
         total,
         totalPages: Math.ceil(total / limit),
       },
-    }
+    };
   }
 
   async findById(id: string) {
     return prisma.product.findUnique({
       where: { id },
-    })
+    });
   }
 
   async findByBarcode(barcode: string) {
     return prisma.product.findUnique({
       where: { barcode },
-    })
+    });
   }
 
   async findActiveProducts(search?: string) {
@@ -71,8 +71,8 @@ export class ProductRepository {
           ],
         }),
       },
-      orderBy: { name: 'asc' },
-    })
+      orderBy: { name: "asc" },
+    });
   }
 
   async create(data: CreateProductDTO) {
@@ -87,14 +87,14 @@ export class ProductRepository {
         barcode: data.barcode,
         isActive: data.isActive ?? true,
       },
-    })
+    });
   }
 
   async update(id: string, data: UpdateProductDTO) {
     return prisma.product.update({
       where: { id },
       data,
-    })
+    });
   }
 
   async updateStock(id: string, quantity: number) {
@@ -105,22 +105,22 @@ export class ProductRepository {
           decrement: quantity,
         },
       },
-    })
+    });
   }
 
   async delete(id: string) {
     return prisma.product.delete({
       where: { id },
-    })
+    });
   }
 
   async getCategories() {
     const products = await prisma.product.findMany({
       select: { category: true },
-      distinct: ['category'],
+      distinct: ["category"],
       where: { category: { not: null } },
-    })
-    return products.map((p) => p.category).filter(Boolean) as string[]
+    });
+    return products.map((p) => p.category).filter(Boolean) as string[];
   }
 
   async getLowStockProducts(threshold: number = 10) {
@@ -129,9 +129,9 @@ export class ProductRepository {
         isActive: true,
         stock: { lte: threshold },
       },
-      orderBy: { stock: 'asc' },
-    })
+      orderBy: { stock: "asc" },
+    });
   }
 }
 
-export const productRepository = new ProductRepository()
+export const productRepository = new ProductRepository();

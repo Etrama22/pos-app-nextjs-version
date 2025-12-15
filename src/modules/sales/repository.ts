@@ -1,7 +1,7 @@
-import prisma from '@/lib/prisma'
-import { CreateSaleDTO, SaleQueryDTO } from './dto'
-import { Prisma, PaymentMethod } from '@prisma/client'
-import { generateReceiptNumber } from '@/lib/utils'
+import prisma from "@/lib/prisma";
+import { CreateSaleDTO, SaleQueryDTO } from "./dto";
+import type { Prisma, PaymentMethod } from "@prisma/client";
+import { generateReceiptNumber } from "@/lib/utils";
 
 export class SaleRepository {
   async findAll(query: SaleQueryDTO) {
@@ -12,9 +12,9 @@ export class SaleRepository {
       endDate,
       paymentMethod,
       userId,
-      sortBy = 'createdAt',
-      sortOrder = 'desc',
-    } = query
+      sortBy = "createdAt",
+      sortOrder = "desc",
+    } = query;
 
     const where: Prisma.SaleWhereInput = {
       ...(startDate && {
@@ -30,7 +30,7 @@ export class SaleRepository {
       }),
       ...(paymentMethod && { paymentMethod }),
       ...(userId && { userId }),
-    }
+    };
 
     const [data, total] = await Promise.all([
       prisma.sale.findMany({
@@ -60,7 +60,7 @@ export class SaleRepository {
         orderBy: { [sortBy]: sortOrder },
       }),
       prisma.sale.count({ where }),
-    ])
+    ]);
 
     return {
       data,
@@ -70,7 +70,7 @@ export class SaleRepository {
         total,
         totalPages: Math.ceil(total / limit),
       },
-    }
+    };
   }
 
   async findById(id: string) {
@@ -96,7 +96,7 @@ export class SaleRepository {
           },
         },
       },
-    })
+    });
   }
 
   async findByReceiptNumber(receiptNumber: string) {
@@ -122,18 +122,18 @@ export class SaleRepository {
           },
         },
       },
-    })
+    });
   }
 
   async create(data: CreateSaleDTO) {
     const subtotal = data.items.reduce(
       (sum, item) => sum + item.priceAtSale * item.quantity,
       0
-    )
-    const discount = data.discount || 0
-    const tax = data.tax || 0
-    const total = subtotal - discount + tax
-    const changeAmount = data.paymentAmount - total
+    );
+    const discount = data.discount || 0;
+    const tax = data.tax || 0;
+    const total = subtotal - discount + tax;
+    const changeAmount = data.paymentAmount - total;
 
     return prisma.$transaction(async (tx) => {
       // Create sale
@@ -178,7 +178,7 @@ export class SaleRepository {
             },
           },
         },
-      })
+      });
 
       // Update product stock
       for (const item of data.items) {
@@ -189,11 +189,11 @@ export class SaleRepository {
               decrement: item.quantity,
             },
           },
-        })
+        });
       }
 
-      return sale
-    })
+      return sale;
+    });
   }
 
   async getSummary(startDate?: string, endDate?: string) {
@@ -209,7 +209,7 @@ export class SaleRepository {
           lte: new Date(endDate),
         },
       }),
-    }
+    };
 
     const [aggregation, paymentMethods] = await Promise.all([
       prisma.sale.aggregate({
@@ -225,14 +225,14 @@ export class SaleRepository {
         },
       }),
       prisma.sale.groupBy({
-        by: ['paymentMethod'],
+        by: ["paymentMethod"],
         where,
         _count: true,
         _sum: {
           total: true,
         },
       }),
-    ])
+    ]);
 
     return {
       totalSales: aggregation._count,
@@ -245,13 +245,13 @@ export class SaleRepository {
         count: pm._count,
         total: pm._sum.total || 0,
       })),
-    }
+    };
   }
 
   async getTodaySales() {
-    const today = new Date()
-    today.setHours(0, 0, 0, 0)
-    
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
     return prisma.sale.findMany({
       where: {
         createdAt: {
@@ -271,8 +271,8 @@ export class SaleRepository {
           },
         },
       },
-      orderBy: { createdAt: 'desc' },
-    })
+      orderBy: { createdAt: "desc" },
+    });
   }
 
   async getRecentSales(limit: number = 5) {
@@ -297,10 +297,10 @@ export class SaleRepository {
           },
         },
       },
-      orderBy: { createdAt: 'desc' },
+      orderBy: { createdAt: "desc" },
       take: limit,
-    })
+    });
   }
 }
 
-export const saleRepository = new SaleRepository()
+export const saleRepository = new SaleRepository();
