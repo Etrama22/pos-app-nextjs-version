@@ -1,16 +1,7 @@
 {
-  "/(dashboard)/admin/backup/page": "app/(dashboard)/admin/backup/page.js",
-  "/(dashboard)/admin/products/page": "app/(dashboard)/admin/products/page.js",
-  "/(dashboard)/admin/sales/page": "app/(dashboard)/admin/sales/page.js",
   "/(dashboard)/pos/page": "app/(dashboard)/pos/page.js",
   "/api/auth/[...nextauth]/route": "app/api/auth/[...nextauth]/route.js",
-  "/api/backup/list/route": "app/api/backup/list/route.js",
   "/api/products/active/route": "app/api/products/active/route.js",
-  "/api/products/export/csv/route": "app/api/products/export/csv/route.js",
-  "/api/products/route": "app/api/products/route.js",
-  "/api/sales/export/pdf/route": "app/api/sales/export/pdf/route.js",
-  "/api/sales/route": "app/api/sales/route.js",
-  "/api/sales/summary/route": "app/api/sales/summary/route.js",
   "/login/page": "app/login/page.js",
   "/page": "app/page.js"
 }

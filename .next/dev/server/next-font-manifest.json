@@ -1,14 +1,5 @@
 {
   "app": {
-    "[project]/src/app/(dashboard)/admin/backup/page": [
-      "static/media/83afe278b6a6bb3c-s.p.3a6ba036.woff2"
-    ],
-    "[project]/src/app/(dashboard)/admin/products/page": [
-      "static/media/83afe278b6a6bb3c-s.p.3a6ba036.woff2"
-    ],
-    "[project]/src/app/(dashboard)/admin/sales/page": [
-      "static/media/83afe278b6a6bb3c-s.p.3a6ba036.woff2"
-    ],
     "[project]/src/app/(dashboard)/pos/page": [
       "static/media/83afe278b6a6bb3c-s.p.3a6ba036.woff2"
     ],

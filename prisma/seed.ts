@@ -5,8 +5,6 @@ const prisma = new PrismaClient();
 
 async function main() {
   console.log("🌱 Starting seed...");
-
-  // Clear existing data
   await prisma.saleItem.deleteMany();
   await prisma.sale.deleteMany();
   await prisma.product.deleteMany();
@@ -14,7 +12,6 @@ async function main() {
   await prisma.backupLog.deleteMany();
   await prisma.setting.deleteMany();
 
-  // Create users
   const adminPassword = await bcrypt.hash("admin123", 12);
   const cashierPassword = await bcrypt.hash("kasir123", 12);
 
